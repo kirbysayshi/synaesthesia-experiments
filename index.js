@@ -2,6 +2,7 @@ var v3 = require('pocket-physics/v3');
 var accelerate = require('pocket-physics/accelerate3d');
 var inertia = require('pocket-physics/inertia3d');
 var constrain = require('pocket-physics/distanceconstraint3d');
+//var drag = require('pocket-physics/drag3d');
 
 var TIMESTEP = 100;
 var DENSITY = 100;
@@ -84,8 +85,8 @@ for (var i = 0; i < totalPointCount; i++) {
 drawSquares(ctx, boxWidth, maxZVelocity, points);
 
 window.addEventListener('mousemove', function(e) {
-  var ix = (e.clientX - boxWidth) % boxWidth;
-  var iy = Math.floor((e.clientY - boxWidth) / boxWidth);
+  var ix = Math.floor(e.clientX / boxWidth);
+  var iy = Math.floor(e.clientY / boxWidth);
   var point = points[iy * pointCountX + ix];
 
   if (!point) return;
@@ -111,6 +112,7 @@ window.go = function tick() {
     }
 
     for (i = 0; i < points.length; i++) {
+      //drag(points[i], 0.79);
       inertia(points[i], TIMESTEP);
     }
 
