@@ -1,0 +1,20 @@
+{
+  "name": "synaesthesia-stuff",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "demo": "beefy index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "pocket-ces": "^1.0.0",
+    "pocket-physics": "^2.6.0"
+  },
+  "devDependencies": {
+    "beefy": "^2.1.4",
+    "browserify": "^9.0.8"
+  }
+}
