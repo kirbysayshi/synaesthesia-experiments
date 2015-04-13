@@ -81,6 +81,11 @@ for (var i = 0; i < totalPointCount; i++) {
   }
 }
 
+points[0].mass = 0;
+points[pointCountX - 1].mass = 0;
+points[points.length-1].mass = 0;
+points[points.length-pointCountX].mass = 0;
+
 //debugDrawConstraints(ctx, constraints);
 drawSquares(ctx, boxWidth, maxZVelocity, points);
 
