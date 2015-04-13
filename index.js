@@ -3,7 +3,7 @@ var accelerate = require('pocket-physics/accelerate3d');
 var inertia = require('pocket-physics/inertia3d');
 var constrain = require('pocket-physics/distanceconstraint3d');
 
-var TIMESTEP = 1;
+var TIMESTEP = 100;
 var DENSITY = 100;
 
 document.body.style
@@ -64,24 +64,34 @@ for (var i = 0; i < totalPointCount; i++) {
   var dist;
 
   if (!isRightEdge && !isFirstRow) {
-    constraints.push( [point, points[ur], boxWidth] );
+    constraints.push( [point, points[ur], v3.distance(point.cpos, points[ur].cpos)] );
   }
 
   if (!isFirstRow) {
-    constraints.push( [point, points[up], boxWidth] );
+    constraints.push( [point, points[up], v3.distance(point.cpos, points[up].cpos)] );
   }
 
   if (!isLeftEdge) {
-    constraints.push( [point, points[lt], boxWidth] );
+    constraints.push( [point, points[lt], v3.distance(point.cpos, points[lt].cpos)] );
   }
 
   if (!isLeftEdge && !isFirstRow) {
-    constraints.push( [point, points[ul], boxWidth] );
+    constraints.push( [point, points[ul], v3.distance(point.cpos, points[ul].cpos)] );
   }
 }
 
 //debugDrawConstraints(ctx, constraints);
 drawSquares(ctx, boxWidth, maxZVelocity, points);
+
+window.addEventListener('mousemove', function(e) {
+  var ix = (e.clientX - boxWidth) % boxWidth;
+  var iy = Math.floor((e.clientY - boxWidth) / boxWidth);
+  var point = points[iy * pointCountX + ix];
+
+  if (!point) return;
+
+  point.acel.z += maxZVelocity;
+})
 
 window.go = function tick() {
   requestAnimationFrame(function () {
