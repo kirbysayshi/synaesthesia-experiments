@@ -117,7 +117,7 @@ window.go = function() {
     }
 
     for (i = 0; i < points.length; i++) {
-      drag(points[i], 0.59);
+      drag(points[i], 0.99);
       inertia(points[i], TIMESTEP);
     }
 
@@ -131,10 +131,17 @@ function drawSquares(ctx, width, maxzvel, points) {
     var ppos = points[i].ppos;
     var velz = cpos.z - ppos.z;
     var h = (velz / maxzvel) * 360;
+    var cameraZ = 100;
+
+    var distRatio = cpos.z / cameraZ;
+    var w = width + (distRatio * width);
+    var h = width + (distRatio * width);
+    var x = cpos.x - ((distRatio * width) / 2);
+    var y = cpos.y - ((distRatio * width) / 2)
 
     ctx.beginPath();
     ctx.fillStyle = 'hsl(' + h + ',80%,67%)';
-    ctx.fillRect(cpos.x, cpos.y, width, width);
+    ctx.fillRect(x, y, w, h);
   }
 }
 
