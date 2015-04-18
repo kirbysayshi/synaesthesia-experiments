@@ -14,7 +14,7 @@
     "pocket-physics": "^2.6.1"
   },
   "devDependencies": {
-    "beefy": "^2.1.4",
+    "beefy": "^2.1.5",
     "browserify": "^9.0.8"
   }
 }
