@@ -26,6 +26,8 @@ var fcvs = document.createElement('canvas')
 var wcvs = document.createElement('canvas')
 var ccvs = document.createElement('canvas')
 
+fcvs.width = wcvs.width = ccvs.width = 1024
+
 var fctx = fcvs.getContext('2d')
 var wctx = wcvs.getContext('2d')
 var cctx = ccvs.getContext('2d')
@@ -77,9 +79,11 @@ function analyse() {
 
   for (var i = 0; i < means.length; i+=4) {
     if (clusterer.clusters[i/4].length() >= 1024/2) continue;
+    var scaledWave = ((means[i+1] / 256) - 0.5) * ccvs.height
+    var clusterSizeScaled = (clusterer.clusters[i/4].length() / 1024) * ccvs.height
     cctx.fillRect(
-      (means[i] / 255) * ccvs.width,   // frequency
-      (means[i+1] / 255) * ccvs.height, // waveform
+      (means[i] / 256) * ccvs.width,   // frequency
+      ccvs.height/2 - scaledWave/2 - (clusterSizeScaled / 2), // waveform
       (clusterer.clusters[i/4].length() / 1024) * ccvs.width,
       (clusterer.clusters[i/4].length() / 1024) * ccvs.height
     )
@@ -89,13 +93,14 @@ function analyse() {
 
   var barWidth = Math.max(fcvs.width / frequencies.length, 1)
   for (var i = 0; i < frequencies.length; i++) {
-    fctx.fillRect(i*barWidth, fcvs.height, barWidth, -frequencies[i])
+    fctx.fillRect(i*barWidth, fcvs.height, barWidth, -(frequencies[i] / 256 * fcvs.height))
   }
 
   wctx.clearRect(0, 0, wcvs.width, wcvs.height)
 
   var pointDist = Math.max(wcvs.width / waveform.length, 1)
   for (var i = 0; i < waveform.length; i++) {
-    wctx.fillRect(i*pointDist, wcvs.height, pointDist, -waveform[i])
+    var scaled = ((waveform[i] / 256) - 0.5) * wcvs.height
+    wctx.fillRect(i*pointDist, wcvs.height/2 - scaled/2, pointDist, scaled)
   }
 }
