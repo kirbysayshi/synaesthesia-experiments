@@ -97,24 +97,38 @@ drawSquares(ctx, boxWidth, maxZVelocity, points);
 window.addEventListener('mousemove', function(e) {
   var ix = Math.floor(e.clientX / boxWidth);
   var iy = Math.floor(e.clientY / boxWidth);
-  var point = points[iy * pointCountX + ix];
+  var i = iy * pointCountX + ix
+  var point = points[i];
 
-  if (!point) return;
+  if (!point
+    || i == 0
+    && i == pointCountX - 1
+    && i == points.length - 1
+    && i == points.length - pointCountX) return;
 
   point.acel.z += maxZVelocity;
 })
 
 window.go = function() {
 
-  /*(function fakeUser() {
+  (function fakeUser() {
 
-    var i = Math.floor(Math.random()*points.length);
-    points[i].acel.z += (maxZVelocity * Math.random()) + (maxZVelocity/2)
-
-    setTimeout(fakeUser, Math.random() * 300)
-  }());*/
+  }());
 
   (function tick() {
+
+    for (i = 0; i < points.length; i++) {
+      if (
+        Math.random() > 0.30
+        && i !== 0
+        && i !== pointCountX - 1
+        && i !== points.length - 1
+        && i !== points.length - pointCountX
+      ) {
+        points[i].acel.z += ((maxZVelocity * Math.random()) - (maxZVelocity/2)) * 0.01
+      }
+    }
+
     ctx.clearRect(0, 0, cvs.width, cvs.height);
     drawSquares(ctx, boxWidth, maxZVelocity, points);
 
