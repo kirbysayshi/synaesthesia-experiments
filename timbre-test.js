@@ -38,6 +38,7 @@ var cctx = ccvs.getContext('2d')
 var gctx = gcvs.getContext('2d')
 
 //fctx.globalAlpha = wctx.globalAlpha = cctx.globalAlpha = 0.1;
+//gctx.globalAlpha = 0.1
 
 document.body.appendChild(fcvs)
 document.body.appendChild(wcvs)
@@ -94,6 +95,10 @@ function analyse() {
   fctx.clearRect(0, 0, fcvs.width, fcvs.height)
   wctx.clearRect(0, 0, wcvs.width, wcvs.height)
   gctx.clearRect(0, 0, gcvs.width, gcvs.height)
+
+  //gctx.fillStyle = '#ffffff'
+  //gctx.fillRect(0, 0, gcvs.width, gcvs.height)
+  //gctx.fillStyle = '#000000'
 
   for (var i = 0; i < frequencies.length; i++) {
     xy[(i * 4) + 0] = frequencies[i];
@@ -163,7 +168,7 @@ function meydaGauges(meyda, features) {
   }
   for (var i = 1; i < arguments.length; i++) {
     gauges.names.push(arguments[i])
-    gauges.values.push(meydaGauge(meyda, arguments[i], 1))
+    gauges.values.push(meydaGauge(meyda, arguments[i], 10))
   }
   return gauges;
 }
@@ -187,10 +192,13 @@ function meydaGauge(meyda, name, smoothness) {
   // smooth the jitter
   function avg() {
     var sum = 0;
-    for (var i = 0; i < arguments.length; i++) {
-      sum += arguments[i]
+    var len = arguments.length;
+    var count = 0;
+    for (var i = 0; i < len; i++) {
+      sum += arguments[i] * (len - i) // newest to oldest values
+      count += i
     }
-    return sum / arguments.length
+    return sum / count
   }
 }
 
