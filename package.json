@@ -6,14 +6,23 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "demo": "beefy cloth-test.js",
-    "bundle": "for js in *-test.js; do browserify $js > $(basename $js .js)-bundle.js; done"
+    "bundle": "for js in *-test.js; do browserify $js > $(basename $js .js)-bundle.js; done",
+    "css": "lessc style.less | autoprefixer > style-compiled.css",
+    "start": "node audience-server.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "autoprefixer": "^5.1.1",
+    "bootstrap": "^3.3.4",
+    "express": "^4.12.4",
+    "less": "^2.5.0",
     "ncolorpalette-clusterer": "^2.0.1",
     "pocket-ces": "^1.0.0",
-    "pocket-physics": "^2.6.1"
+    "pocket-physics": "^2.6.1",
+    "socket.io": "^1.3.5",
+    "socket.io-client": "^1.3.5",
+    "vash": "^0.8.4"
   },
   "devDependencies": {
     "beefy": "^2.1.5",
