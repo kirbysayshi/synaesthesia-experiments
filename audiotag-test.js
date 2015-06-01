@@ -16,7 +16,7 @@ files = files.map(function(f, idx) {
     b.textContent = 'GO ' + (idx + 1);
     document.body.appendChild(b);
 
-    [
+    window.location.search.indexOf('debug=1') > -1 && [
     'abort', 'canplay', 'canplaythrough', 'mozcanplaythrough', 'durationchange', 'emptied',
     'encrypted', 'ended', 'error', 'interruptbegin', 'interruptend',
     'load', 'loaded',
